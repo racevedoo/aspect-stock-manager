@@ -8,6 +8,7 @@ public class LoginHandler extends ConsoleHandler{
 	
 	private HashMap<String, String> passwords;
 	public LoginHandler() {
+		super();
 		this.passwords = new HashMap<>();
 		this.passwords.put("admin", "admin");
 	}
@@ -20,10 +21,10 @@ public class LoginHandler extends ConsoleHandler{
 	}
 	
 	private String getUsername() {
-		return this.getConsoleString("Type in your username");
+		return super.getConsoleString("Type in your username");
 	}
 	
 	private String getPassword() {
-		return this.getConsoleString("Type in your password:");
+		return super.getConsoleString("Type in your password:");
 	}
 }
