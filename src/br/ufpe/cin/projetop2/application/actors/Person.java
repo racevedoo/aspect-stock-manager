@@ -24,7 +24,7 @@ public class Person {
   }
 
   public boolean resetName(String password, String name) {
-    if (this.password != password) return false;
+    if (!this.password.equals(password)) return false;
 
     this.name = name;
     return true;
@@ -39,7 +39,7 @@ public class Person {
   }
 
   public boolean resetCpf(String password, String cpf) {
-    if (this.password != password) return false;
+    if (!this.password.equals(password)) return false;
 
     this.cpf = cpf;
     return true;
@@ -63,7 +63,7 @@ public class Person {
   }
 
   public boolean resetPassword(String password, String newPassword) {
-    if (this.password == password) return false;
+    if (!this.password.equals(password)) return false;
 
     this.password = newPassword;
     return true;
