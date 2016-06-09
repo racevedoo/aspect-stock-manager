@@ -1,4 +1,4 @@
-package br.ufpe.cin.projetop2.application.actors;
+package br.ufpe.cin.projetop2.actors;
 
 public class Customer extends Person {
   public Customer(String name, String cpf) {

@@ -1,4 +1,4 @@
-package br.ufpe.cin.projetop2.application.actors;
+package br.ufpe.cin.projetop2.actors;
 
 public class Person {
   private String name;
