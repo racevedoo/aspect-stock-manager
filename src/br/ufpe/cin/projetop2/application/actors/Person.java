@@ -7,7 +7,7 @@ public class Person {
   private String cpf;
   private String login;
   private String password;  
-  
+
   public Person(String name, String cpf, String login, String password) {
     this.name = name;
     this.cpf = cpf;
@@ -22,12 +22,14 @@ public class Person {
   public void setName(String name) {
     this.name = name;
   }
-  
-  public void resetName(String password, String name) {
-    if (this.password == password) this.name = name;
-    
+
+  public boolean resetName(String password, String name) {
+    if (this.password != password) return false;
+
+    this.name = name;
+    return true;
   }
-  
+
   public String getCpf() {
     return cpf;
   }
@@ -36,11 +38,14 @@ public class Person {
     this.cpf = cpf;
   }
 
-  public void resetCpf(String password, String cpf) {
-    if (this.password == password) this.cpf = cpf;
-    
+  public boolean resetCpf(String password, String cpf) {
+    if (this.password != password) return false;
+
+    this.cpf = cpf;
+    return true;
+
   }
-  
+
   public String getLogin() {
     return login;
   }
@@ -56,10 +61,12 @@ public class Person {
   public void setPassword(String password) {
     this.password = password;
   }
-  
-  public void resetPassword(String password, String newPassword) {
-    if (this.password == password) this.password = newPassword;
-    
+
+  public boolean resetPassword(String password, String newPassword) {
+    if (this.password == password) return false;
+
+    this.password = newPassword;
+    return true;
   }
-  
- }
+
+}
