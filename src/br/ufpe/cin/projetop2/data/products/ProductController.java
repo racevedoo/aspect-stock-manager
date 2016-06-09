@@ -26,7 +26,7 @@ public final class ProductController {
 
   public void sell(String name, int amount) {
     Product product = productModel.getData(name);
-    product.increaseQuantity(amount);
+    product.decreaseQuantity(amount);
     productModel.saveData(name, product);
   }
 
