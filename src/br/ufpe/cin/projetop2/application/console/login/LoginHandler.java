@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 import br.ufpe.cin.projetop2.application.console.ConsoleHandler;
 
-public class LoginHandler extends ConsoleHandler{
+public class LoginHandler extends ConsoleHandler {
 	
 	private HashMap<String, String> passwords;
 	public LoginHandler() {
