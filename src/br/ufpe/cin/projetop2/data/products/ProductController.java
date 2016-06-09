@@ -6,16 +6,16 @@ import br.ufpe.cin.projetop2.data.HashMapDataModel;
 
 
 //TODO(limalucas): Insert exception handling (maybe using aspects)
-public final class ProductView {
+public final class ProductController {
   DataModel<Product> productModel;
 
-  private ProductView() {
+  private ProductController() {
     this.productModel = new HashMapDataModel<Product>();
   }
 
-  private static ProductView singletonInstance = new ProductView();
+  private static ProductController singletonInstance = new ProductController();
 
-  public ProductView getInstance() {
+  public ProductController getInstance() {
     return singletonInstance;
   }
 
