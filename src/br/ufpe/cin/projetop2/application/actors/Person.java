@@ -1,7 +1,5 @@
 package br.ufpe.cin.projetop2.application.actors;
 
-import java.util.Scanner;
-
 public class Person {
   private String name;
   private String cpf; 
