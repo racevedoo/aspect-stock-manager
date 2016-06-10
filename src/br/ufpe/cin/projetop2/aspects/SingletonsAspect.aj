@@ -5,7 +5,7 @@ import java.util.Map;
 
 import br.ufpe.cin.projetop2.annotations.Singleton;
 
-public aspect SingletonsAspects {
+public aspect SingletonsAspect {
   Map<Class<?>, Object> instances = new HashMap<>();
 
   Object around(): execution(* *.getInstance(..)) && within(@Singleton *) {
