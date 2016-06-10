@@ -13,10 +13,8 @@ public final class ProductController {
     this.productModel = new HashMapDataModel<Product>();
   }
 
-  private static ProductController singletonInstance = new ProductController();
-
-  public ProductController getInstance() {
-    return singletonInstance;
+  public static ProductController getInstance() {
+    return new ProductController();
   }
 
   public void registerNewProduct(String name) {
