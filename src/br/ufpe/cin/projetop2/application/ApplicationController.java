@@ -2,6 +2,7 @@ package br.ufpe.cin.projetop2.application;
 
 import br.ufpe.cin.projetop2.actors.CustomerController;
 import br.ufpe.cin.projetop2.actors.EmployeeController;
+import br.ufpe.cin.projetop2.annotations.RequireFullPermission;
 import br.ufpe.cin.projetop2.data.products.Product;
 import br.ufpe.cin.projetop2.data.products.ProductController;
 

@@ -5,8 +5,8 @@ import java.util.Map;
 
 import br.ufpe.cin.projetop2.annotations.Singleton;
 
-public aspect SingletonsAspects {
-  Map<Class<?>, Object> instances = new HashMap<>();
+public aspect SingletonsAspect {
+  private Map<Class<?>, Object> instances = new HashMap<>();
 
   Object around(): execution(* *.getInstance(..)) && within(@Singleton *) {
     Class<?> singletonType = thisJoinPoint.getSignature().getDeclaringType();
