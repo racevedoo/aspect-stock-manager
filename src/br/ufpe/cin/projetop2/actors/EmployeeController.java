@@ -1,8 +1,10 @@
 package br.ufpe.cin.projetop2.actors;
 
+import br.ufpe.cin.projetop2.annotations.Singleton;
 import br.ufpe.cin.projetop2.data.DataModel;
 import br.ufpe.cin.projetop2.data.HashMapDataModel;
 
+@Singleton
 public final class EmployeeController {
   DataModel<Employee> entries;
 

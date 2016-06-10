@@ -1,10 +1,12 @@
 package br.ufpe.cin.projetop2.data.products;
 
+import br.ufpe.cin.projetop2.annotations.Singleton;
 import br.ufpe.cin.projetop2.data.DataModel;
 import br.ufpe.cin.projetop2.data.HashMapDataModel;
 
 
 //TODO(limalucas): Insert exception handling (maybe using aspects)
+@Singleton
 public final class ProductController {
   DataModel<Product> productModel;
 

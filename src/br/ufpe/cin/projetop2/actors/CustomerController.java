@@ -3,10 +3,12 @@ package br.ufpe.cin.projetop2.actors;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.ufpe.cin.projetop2.annotations.Singleton;
 import br.ufpe.cin.projetop2.data.DataModel;
 import br.ufpe.cin.projetop2.data.HashMapDataModel;
 import br.ufpe.cin.projetop2.data.products.Product;
 
+@Singleton
 public final class CustomerController {
   DataModel<Customer> entries;
   DataModel<List<Product>> purchases;
