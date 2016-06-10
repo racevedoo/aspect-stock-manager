@@ -1,2 +1,2 @@
-# projeto-p2
-Projeto da disciplina de Programação 2 do Centro de Informática
+# Aspect Stock Manager
+Command line tool to manage stock on a store. Used as a practical example to learn AspectJ
