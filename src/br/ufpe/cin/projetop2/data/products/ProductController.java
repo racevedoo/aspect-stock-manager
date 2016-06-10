@@ -1,6 +1,5 @@
 package br.ufpe.cin.projetop2.data.products;
 
-import br.ufpe.cin.projetop2.actors.Customer;
 import br.ufpe.cin.projetop2.data.DataModel;
 import br.ufpe.cin.projetop2.data.HashMapDataModel;
 
@@ -28,12 +27,13 @@ public final class ProductController {
     productModel.saveData(name, product);
   }
 
-  public void sell(String name, int amount, Customer customer) {
-    // TODO(limalucas): do something with customer =P
-    sell(name, amount);
+  public void supply(String name, int amount) {
+    Product product = productModel.getData(name);
+    product.increaseQuantity(amount);
+    productModel.saveData(name, product);
   }
 
-  public String queryProduct(String name) {
-    return productModel.getData(name).toString();
+  public Product queryProduct(String name) {
+    return productModel.getData(name);
   }
 }
