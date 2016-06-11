@@ -14,7 +14,7 @@ public aspect LoginAspect {
     }
   }
   
-  pointcut requireLogin() : execution(@RequireLogin * *(*));
+  pointcut requireLogin() : call(@RequireLogin * *(*));
   
   declare soft: UserNotLoggedInException: requireLogin();
 
