@@ -21,7 +21,7 @@ public final class ApplicationController {
     this.productController = ProductController.getInstance();
   }
   
-  public ApplicationController getInstance() {
+  public static ApplicationController getInstance() {
 	return new ApplicationController();
   }
 
