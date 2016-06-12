@@ -2,9 +2,7 @@ package br.ufpe.cin.projetop2.data.products;
 
 public class ProductControllerTest {
   public static void testSingleton() {
-    // Should print constructor called message only once
-    ProductController.getInstance();
-    ProductController.getInstance();
+	assert ProductController.getInstance().hashCode() == ProductController.getInstance().hashCode();
   }
 
   public static void main(String[] args) {

@@ -2,7 +2,8 @@ package br.ufpe.cin.projetop2.application;
 
 import br.ufpe.cin.projetop2.actors.CustomerController;
 import br.ufpe.cin.projetop2.actors.EmployeeController;
-import br.ufpe.cin.projetop2.annotations.RequireFullPermission;
+import br.ufpe.cin.projetop2.annotations.RequireLogin;
+import br.ufpe.cin.projetop2.application.console.login.UserNotLoggedInException;
 import br.ufpe.cin.projetop2.data.products.Product;
 import br.ufpe.cin.projetop2.data.products.ProductController;
 
@@ -44,8 +45,12 @@ public final class ApplicationController {
     productController.sell(productName, amount);
   }
 
-  public String queryProduct(String productName) {
+  @RequireLogin
+  public String queryProduct(String productName) throws UserNotLoggedInException {
     Product product = productController.queryProduct(productName);
+    if (product == null) {
+      return "Product not found";
+    }
     return product.toString();
   }
 }
