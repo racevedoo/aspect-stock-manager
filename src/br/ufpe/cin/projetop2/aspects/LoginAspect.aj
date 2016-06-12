@@ -1,8 +1,9 @@
 package br.ufpe.cin.projetop2.aspects;
 
 import br.ufpe.cin.projetop2.annotations.RequireLogin;
+import br.ufpe.cin.projetop2.annotations.WrapLogin;
 import br.ufpe.cin.projetop2.application.console.login.LoginHandler;
-import br.ufpe.cin.projetop2.application.console.login.UserNotLoggedInException;
+import br.ufpe.cin.projetop2.exceptions.UserNotLoggedInException;
 
 public aspect LoginAspect {
 
@@ -37,5 +38,11 @@ public aspect LoginAspect {
     if (currentUser == null) {
       throw new UserNotLoggedInException("User is not logged in");
     }
+  }
+  
+  after() returning(FunctionWithUsername<Void> function) throws Exception : execution(@WrapLogin * *(..)) {
+    System.out.println("Here at LoginAspect");
+    System.out.println("Current user is " + currentUser);
+    function.run(currentUser);
   }
 }

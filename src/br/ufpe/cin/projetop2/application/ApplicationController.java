@@ -2,10 +2,12 @@ package br.ufpe.cin.projetop2.application;
 
 import br.ufpe.cin.projetop2.actors.CustomerController;
 import br.ufpe.cin.projetop2.actors.EmployeeController;
+import br.ufpe.cin.projetop2.annotations.RequireFullPermission;
 import br.ufpe.cin.projetop2.annotations.RequireLogin;
-import br.ufpe.cin.projetop2.application.console.login.UserNotLoggedInException;
+import br.ufpe.cin.projetop2.annotations.WrapLogin;
 import br.ufpe.cin.projetop2.data.products.Product;
 import br.ufpe.cin.projetop2.data.products.ProductController;
+import br.ufpe.cin.projetop2.exceptions.UserNotLoggedInException;
 
 public final class ApplicationController {
 
@@ -52,5 +54,10 @@ public final class ApplicationController {
       return "Product not found";
     }
     return product.toString();
+  }
+
+  @RequireFullPermission
+  public static void test() {
+    System.out.println("Hello World");
   }
 }

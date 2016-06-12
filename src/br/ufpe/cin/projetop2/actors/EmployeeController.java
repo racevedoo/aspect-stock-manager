@@ -18,7 +18,10 @@ public final class EmployeeController {
 
   public void registerNewEmployee(String name, String cpf, String username, String password) {
     Employee employee = new Employee(name, cpf, username, password);
-    entries.saveData(cpf, employee);
+    entries.saveData(username, employee);
   }
 
+  public Employee queryEmployee(String username) {
+    return entries.getData(username);
+  }
 }
