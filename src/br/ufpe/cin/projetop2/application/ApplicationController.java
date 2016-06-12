@@ -6,6 +6,7 @@ import br.ufpe.cin.projetop2.annotations.RequireLogin;
 import br.ufpe.cin.projetop2.application.console.login.UserNotLoggedInException;
 import br.ufpe.cin.projetop2.data.products.Product;
 import br.ufpe.cin.projetop2.data.products.ProductController;
+import br.ufpe.cin.projetop2.exceptions.InvalidStateException;
 
 public final class ApplicationController {
 
@@ -31,22 +32,21 @@ public final class ApplicationController {
     productController.registerNewProduct(name);
   }
 
-  public void sell(String productName, int amount) {
+  public void sell(String productName, int amount) throws InvalidStateException {
     productController.sell(productName, amount);
   }
 
-  public void sell(String productName, int amount, String customerCpf) {
+  public void sell(String productName, int amount, String customerCpf) throws InvalidStateException {
     productController.sell(productName, amount);
     Product product = productController.queryProduct(productName);
     customerController.addPurchase(customerCpf, product);
   }
 
-  public void supply(String productName, int amount) {
-    productController.sell(productName, amount);
+  public void supply(String productName, int amount) throws InvalidStateException {
+    productController.supply(productName, amount);
   }
 
-  @RequireLogin
-  public String queryProduct(String productName) throws UserNotLoggedInException {
+  public String queryProduct(String productName) {
     Product product = productController.queryProduct(productName);
     if (product == null) {
       return "Product not found";

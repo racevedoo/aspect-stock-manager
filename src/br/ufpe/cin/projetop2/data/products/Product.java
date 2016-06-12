@@ -1,19 +1,32 @@
 package br.ufpe.cin.projetop2.data.products;
 
+import br.ufpe.cin.projetop2.annotations.CheckValid;
+import br.ufpe.cin.projetop2.exceptions.InvalidStateException;
+
 public final class Product {
   String name;
-  int quantity;
+  int quantity; 
 
   Product(String name) {
     this.name = name;
     this.quantity = 0;
   }
 
-  public void increaseQuantity(int amount) {
+  public String getName() {
+    return this.name;
+  }
+
+  public int getQuantity() {
+    return this.quantity;
+  }
+
+  @CheckValid
+  public void increaseQuantity(int amount) throws InvalidStateException {
     this.quantity += amount;
   }
 
-  public void decreaseQuantity(int amount) {
+  @CheckValid
+  public void decreaseQuantity(int amount) throws Exception {
     this.quantity -= amount;
   }
 

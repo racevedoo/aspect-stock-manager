@@ -3,6 +3,7 @@ package br.ufpe.cin.projetop2.data.products;
 import br.ufpe.cin.projetop2.annotations.Singleton;
 import br.ufpe.cin.projetop2.data.DataModel;
 import br.ufpe.cin.projetop2.data.HashMapDataModel;
+import br.ufpe.cin.projetop2.exceptions.InvalidStateException;
 
 
 //TODO(limalucas): Insert exception handling (maybe using aspects)
@@ -23,13 +24,18 @@ public final class ProductController {
     productModel.saveData(name, product);
   }
 
-  public void sell(String name, int amount) {
+  public void sell(String name, int amount) throws InvalidStateException {
     Product product = productModel.getData(name);
-    product.decreaseQuantity(amount);
+    try {
+      product.decreaseQuantity(amount);
+    } catch (Exception e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
     productModel.saveData(name, product);
   }
 
-  public void supply(String name, int amount) {
+  public void supply(String name, int amount) throws InvalidStateException {
     Product product = productModel.getData(name);
     product.increaseQuantity(amount);
     productModel.saveData(name, product);
