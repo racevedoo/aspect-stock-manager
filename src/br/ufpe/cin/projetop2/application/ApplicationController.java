@@ -3,21 +3,27 @@ package br.ufpe.cin.projetop2.application;
 import br.ufpe.cin.projetop2.actors.CustomerController;
 import br.ufpe.cin.projetop2.actors.EmployeeController;
 import br.ufpe.cin.projetop2.annotations.RequireLogin;
+import br.ufpe.cin.projetop2.annotations.Singleton;
 import br.ufpe.cin.projetop2.application.console.login.UserNotLoggedInException;
 import br.ufpe.cin.projetop2.data.products.Product;
 import br.ufpe.cin.projetop2.data.products.ProductController;
 import br.ufpe.cin.projetop2.exceptions.InvalidStateException;
 
+@Singleton
 public final class ApplicationController {
 
   private CustomerController customerController;
   private EmployeeController employeeController;
   private ProductController productController;
 
-  public ApplicationController() {
+  private ApplicationController() {
     this.customerController = CustomerController.getInstance();
     this.employeeController = EmployeeController.getInstance();
     this.productController = ProductController.getInstance();
+  }
+  
+  public static ApplicationController getInstance() {
+	return new ApplicationController();
   }
 
   public void registerCustomer(String name, String cpf) {
