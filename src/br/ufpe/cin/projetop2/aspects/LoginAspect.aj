@@ -24,11 +24,9 @@ public aspect LoginAspect {
     } catch(UserNotLoggedInException e) {
       System.err.println("You need to log in to perform this action");
       LoginHandler loginHandler = new LoginHandler();
-      loginHandler.open();
       while(!loginHandler.login()) {
           System.out.println("Login failed. Please try again");
       }
-      loginHandler.close();
       return proceed();
     }
   }
