@@ -2,12 +2,14 @@ package br.ufpe.cin.projetop2.application;
 
 import br.ufpe.cin.projetop2.actors.CustomerController;
 import br.ufpe.cin.projetop2.actors.EmployeeController;
+import br.ufpe.cin.projetop2.annotations.RequireFullPermission;
 import br.ufpe.cin.projetop2.annotations.RequireLogin;
 import br.ufpe.cin.projetop2.annotations.Singleton;
-import br.ufpe.cin.projetop2.application.console.login.UserNotLoggedInException;
 import br.ufpe.cin.projetop2.data.products.Product;
 import br.ufpe.cin.projetop2.data.products.ProductController;
 import br.ufpe.cin.projetop2.exceptions.InvalidStateException;
+import br.ufpe.cin.projetop2.exceptions.PermissionDeniedException;
+import br.ufpe.cin.projetop2.exceptions.UserNotLoggedInException;
 
 @Singleton
 public final class ApplicationController {
@@ -21,7 +23,7 @@ public final class ApplicationController {
     this.employeeController = EmployeeController.getInstance();
     this.productController = ProductController.getInstance();
   }
-  
+
   public static ApplicationController getInstance() {
 	return new ApplicationController();
   }
@@ -58,5 +60,12 @@ public final class ApplicationController {
       return "Product not found";
     }
     return product.toString();
+  }
+
+  // TODO: Remove this once @RequireFullPermission is being correctly used in the controller
+  @RequireLogin
+  @RequireFullPermission
+  public void testPermission() throws PermissionDeniedException, UserNotLoggedInException {
+    System.out.println("Hello World");
   }
 }

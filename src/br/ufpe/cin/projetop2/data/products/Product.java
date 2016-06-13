@@ -5,7 +5,7 @@ import br.ufpe.cin.projetop2.exceptions.InvalidStateException;
 
 public final class Product {
   String name;
-  int quantity; 
+  int quantity;
 
   Product(String name) {
     this.name = name;
@@ -26,7 +26,7 @@ public final class Product {
   }
 
   @CheckValid
-  public void decreaseQuantity(int amount) throws Exception {
+  public void decreaseQuantity(int amount) throws InvalidStateException {
     this.quantity -= amount;
   }
 

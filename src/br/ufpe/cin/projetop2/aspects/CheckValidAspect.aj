@@ -1,12 +1,9 @@
 package br.ufpe.cin.projetop2.aspects;
 
 import br.ufpe.cin.projetop2.annotations.CheckValid;
-import br.ufpe.cin.projetop2.application.console.login.UserNotLoggedInException;
 import br.ufpe.cin.projetop2.actors.Person;
 import br.ufpe.cin.projetop2.data.products.Product;
 import br.ufpe.cin.projetop2.exceptions.InvalidStateException;
-import br.ufpe.cin.projetop2.application.ApplicationController;
-import br.ufpe.cin.projetop2.data.products.ProductController;
 import br.ufpe.cin.projetop2.application.ApplicationController;
 
 public aspect CheckValidAspect {

@@ -26,12 +26,7 @@ public final class ProductController {
 
   public void sell(String name, int amount) throws InvalidStateException {
     Product product = productModel.getData(name);
-    try {
-      product.decreaseQuantity(amount);
-    } catch (Exception e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
+    product.decreaseQuantity(amount);
     productModel.saveData(name, product);
   }
 
