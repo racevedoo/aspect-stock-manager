@@ -4,9 +4,9 @@ import br.ufpe.cin.projetop2.actors.CustomerController;
 import br.ufpe.cin.projetop2.actors.EmployeeController;
 import br.ufpe.cin.projetop2.annotations.RequireFullPermission;
 import br.ufpe.cin.projetop2.annotations.RequireLogin;
-import br.ufpe.cin.projetop2.annotations.WrapLogin;
 import br.ufpe.cin.projetop2.data.products.Product;
 import br.ufpe.cin.projetop2.data.products.ProductController;
+import br.ufpe.cin.projetop2.exceptions.PermissionDeniedException;
 import br.ufpe.cin.projetop2.exceptions.UserNotLoggedInException;
 
 public final class ApplicationController {
@@ -56,8 +56,9 @@ public final class ApplicationController {
     return product.toString();
   }
 
+  // TODO: Remove this once @RequireFullPermission is being correctly used in the controller
   @RequireFullPermission
-  public static void test() {
+  public static void testPermission() throws PermissionDeniedException {
     System.out.println("Hello World");
   }
 }

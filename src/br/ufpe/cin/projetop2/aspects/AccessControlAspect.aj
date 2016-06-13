@@ -1,16 +1,14 @@
 package br.ufpe.cin.projetop2.aspects;
 
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import br.ufpe.cin.projetop2.actors.Employee;
 import br.ufpe.cin.projetop2.actors.EmployeeController;
 import br.ufpe.cin.projetop2.annotations.RequireFullPermission;
 import br.ufpe.cin.projetop2.annotations.WrapLogin;
-import br.ufpe.cin.projetop2.data.DataModel;
-import br.ufpe.cin.projetop2.data.HashMapDataModel;
+import br.ufpe.cin.projetop2.application.ApplicationController;
+import br.ufpe.cin.projetop2.exceptions.PermissionDeniedException;
 
 privileged public aspect AccessControlAspect {
   
@@ -31,25 +29,38 @@ privileged public aspect AccessControlAspect {
   
   public void EmployeeController.updatePermission(String cpf, AccessLevel level) {
     Employee employee = this.entries.getData(cpf);
-    if (employee == null) return;
+    if (employee == null) {
+      return;
+    }
     employee.setAccessLevel(level);
     this.entries.saveData(cpf, employee);
   }
   
+  declare soft: PermissionDeniedException: call(* ApplicationController.*(..));
+  
+  Object around(): call(* ApplicationController.*(..)) {
+    try {
+      return proceed();
+    } catch (PermissionDeniedException e) {
+      System.err.println(e.getMessage());
+      return null;
+    }
+  }
+  
   private static EmployeeController employeeController = EmployeeController.getInstance();
   
-  before() throws Exception: call(@RequireFullPermission * *(..)) {
+  before() throws PermissionDeniedException: call(@RequireFullPermission * *(..)) {
     checkFullPermission();
   }
   
   @WrapLogin
-  FunctionWithUsername<Void> checkFullPermission() throws Exception {
+  FunctionWithUsername<Void> checkFullPermission() throws PermissionDeniedException {
     return new FunctionWithUsername<Void>() {
       @Override
-      public Void run(String username) throws Exception {
+      public Void run(String username) throws PermissionDeniedException {
         Employee employee = employeeController.queryEmployee(username);
         if (employee == null || employee.getAccessLevel() != AccessLevel.FULL) {
-          throw new Exception("User does not have required permission");
+          throw new PermissionDeniedException("User does not have required permission");
         }
         System.out.println("Permission ok");
         return null;
@@ -70,5 +81,5 @@ privileged public aspect AccessControlAspect {
     for (String employeeCpf : fullAccessList) {
       employeeController.updatePermission(employeeCpf, AccessLevel.FULL);
     }
-  }
+  }    
 }
