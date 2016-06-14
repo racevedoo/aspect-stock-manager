@@ -12,12 +12,18 @@ public class ProductControllerTest {
     
     ProductController.getInstance().registerNewProduct("prod");
     Product p = ProductController.getInstance().queryProduct("prod");
-    System.out.println(p.getQuantity());
+    assert p.getQuantity() == 0;
     ProductController.getInstance().supply("prod", 30);
     p = ProductController.getInstance().queryProduct("prod");
-    System.out.println(p.getQuantity());
-    ProductController.getInstance().supply("prod", -40);
+    assert p.getQuantity() == 30;
+    try {
+      ProductController.getInstance().supply("prod", -40);
+      assert false;
+    } catch(InvalidStateException e) {
+      //passed
+    }
+    
     p = ProductController.getInstance().queryProduct("prod");
-    System.out.println(p.getQuantity());
+    assert p.getQuantity() == -10;
   }
 }
