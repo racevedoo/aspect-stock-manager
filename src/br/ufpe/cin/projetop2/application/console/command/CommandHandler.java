@@ -45,7 +45,7 @@ public class CommandHandler extends ConsoleHandler{
       applicationController.registerCustomer(this.getName(), this.getCpf());
     } else if (command.equals("register employee")) {
       applicationController.registerEmployee(this.getName(), this.getCpf(), this.getUsername(), this.getPassword());
-    } else if (command.equals("register employee")) {
+    } else if (command.equals("register product")) {
       applicationController.registerProduct(this.getName());
     } else if (command.equals("sell")) {
       String hasCustomerCpf = super.getConsoleString("Customer cpf? (y/n)");
