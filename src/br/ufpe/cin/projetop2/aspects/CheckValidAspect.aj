@@ -1,6 +1,9 @@
 package br.ufpe.cin.projetop2.aspects;
 
 import br.ufpe.cin.projetop2.annotations.CheckValid;
+
+import org.aspectj.lang.ProceedingJoinPoint;
+
 import br.ufpe.cin.projetop2.actors.Person;
 import br.ufpe.cin.projetop2.data.products.Product;
 import br.ufpe.cin.projetop2.exceptions.InvalidStateException;
@@ -68,8 +71,7 @@ public aspect CheckValidAspect {
     o.checkValid();
   }
   
-  after(ValidObject o) returning throws InvalidStateException : validObjectMethod(o) {
-    o.checkValid();
-  }
-  
+  after(ValidObject o) returning(ValidObject r) throws InvalidStateException : validObjectMethod(o) {
+    r.checkValid();
+  }  
 }

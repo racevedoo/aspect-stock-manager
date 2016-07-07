@@ -16,17 +16,16 @@ public class Person {
     return name;
   }
 
-  public void setName(String name) {
-    this.name = name;
+  public Person setName(String name) {
+    return new Person(name, cpf);
   }
 
   public String getCpf() {
     return cpf;
   }
   
-  @CheckValid
-  public void setCpf(String cpf) throws Exception {
-    this.cpf = cpf;
+  public Person setCpf(String cpf) throws Exception {
+    return new Person(name, cpf);
   }
 
 }

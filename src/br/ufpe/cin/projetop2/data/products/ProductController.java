@@ -26,13 +26,13 @@ public final class ProductController {
 
   public void sell(String name, int amount) throws InvalidStateException {
     Product product = productModel.getData(name);
-    product.decreaseQuantity(amount);
+    product = product.decreaseQuantity(amount);
     productModel.saveData(name, product);
   }
 
   public void supply(String name, int amount) throws InvalidStateException {
     Product product = productModel.getData(name);
-    product.increaseQuantity(amount);
+    product = product.increaseQuantity(amount);
     productModel.saveData(name, product);
   }
 
