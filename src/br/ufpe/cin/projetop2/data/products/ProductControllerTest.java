@@ -9,21 +9,27 @@ public class ProductControllerTest {
 
   public static void main(String[] args) throws InvalidStateException {
     testSingleton();
-    
-    ProductController.getInstance().registerNewProduct("prod");
-    Product p = ProductController.getInstance().queryProduct("prod");
+
+    ProductController controller = ProductController.getInstance();
+
+    controller.registerNewProduct("prod");
+    Product p = controller.queryProduct("prod");
     assert p.getQuantity() == 0;
-    ProductController.getInstance().supply("prod", 30);
-    p = ProductController.getInstance().queryProduct("prod");
+
+    controller.supply("prod", 30);
+    p = controller.queryProduct("prod");
     assert p.getQuantity() == 30;
+
+    controller.sell("prod", 20);
+    p = controller.queryProduct("prod");
+    assert p.getQuantity() == 10;
+
     try {
-      ProductController.getInstance().supply("prod", -40);
+      controller.sell("prod", 20);
       assert false;
-    } catch(InvalidStateException e) {
-      //passed
-    }
-    
-    p = ProductController.getInstance().queryProduct("prod");
-    assert p.getQuantity() == -10;
+    } catch(InvalidStateException e) {}
+
+    p = controller.queryProduct("prod");
+    assert p.getQuantity() == 10;
   }
 }

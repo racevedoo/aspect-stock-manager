@@ -62,7 +62,6 @@ privileged public aspect AccessControlAspect {
         if (employee == null || employee.getAccessLevel() != AccessLevel.FULL) {
           throw new PermissionDeniedException("User does not have required permission");
         }
-        System.out.println("Permission ok");
         return null;
       }
     };

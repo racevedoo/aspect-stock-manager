@@ -1,9 +1,5 @@
 package br.ufpe.cin.projetop2.aspects;
 
-import br.ufpe.cin.projetop2.annotations.CheckValid;
-
-import org.aspectj.lang.ProceedingJoinPoint;
-
 import br.ufpe.cin.projetop2.actors.Person;
 import br.ufpe.cin.projetop2.data.products.Product;
 import br.ufpe.cin.projetop2.exceptions.InvalidStateException;
@@ -54,7 +50,8 @@ public aspect CheckValidAspect {
     }
   }
 
-  pointcut validObjectMethod(ValidObject o) : execution(@CheckValid * *.*(..)) && this(o);
+  pointcut validObjectMethod(ValidObject o) :
+      execution(ValidObject+ ValidObject+.*(..)) && this(o);
     
   declare soft: InvalidStateException: call(* ApplicationController.* (..));
   

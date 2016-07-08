@@ -1,8 +1,8 @@
 package br.ufpe.cin.projetop2.aspects;
 
-import br.ufpe.cin.projetop2.annotations.RequireLogin;
 import br.ufpe.cin.projetop2.annotations.WrapLogin;
 import br.ufpe.cin.projetop2.application.console.login.LoginHandler;
+import br.ufpe.cin.projetop2.application.ApplicationController;
 import br.ufpe.cin.projetop2.exceptions.PermissionDeniedException;
 import br.ufpe.cin.projetop2.exceptions.UserNotLoggedInException;
 
@@ -16,7 +16,7 @@ public aspect LoginAspect {
     }
   }
 
-  pointcut requireLogin() : call(@RequireLogin * *(..));
+  pointcut requireLogin() : call(* ApplicationController.*(..));
 
   declare soft: UserNotLoggedInException: requireLogin();
 

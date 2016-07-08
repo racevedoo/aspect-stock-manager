@@ -3,7 +3,6 @@ package br.ufpe.cin.projetop2.application;
 import br.ufpe.cin.projetop2.actors.CustomerController;
 import br.ufpe.cin.projetop2.actors.EmployeeController;
 import br.ufpe.cin.projetop2.annotations.RequireFullPermission;
-import br.ufpe.cin.projetop2.annotations.RequireLogin;
 import br.ufpe.cin.projetop2.annotations.Singleton;
 import br.ufpe.cin.projetop2.data.products.Product;
 import br.ufpe.cin.projetop2.data.products.ProductController;
@@ -24,48 +23,49 @@ public final class ApplicationController {
     this.productController = ProductController.getInstance();
   }
 
-  public static ApplicationController getInstance() {
-	return new ApplicationController();
+  public static ApplicationController getInstance() throws UserNotLoggedInException {
+    return new ApplicationController();
   }
 
-  public void registerCustomer(String name, String cpf) {
+  public void registerCustomer(String name, String cpf) throws UserNotLoggedInException {
     customerController.registerNewCustomer(name, cpf);
   }
 
-  public void registerEmployee(String name, String cpf, String username, String password) {
+  public void registerEmployee(
+      String name, String cpf, String username, String password) throws UserNotLoggedInException {
     employeeController.registerNewEmployee(name, cpf, username, password);
   }
 
-  public void registerProduct(String name) {
+  @RequireFullPermission
+  public void registerProduct(String name) throws PermissionDeniedException, UserNotLoggedInException {
     productController.registerNewProduct(name);
   }
 
-  public void sell(String productName, int amount) throws InvalidStateException {
+  @RequireFullPermission
+  public void sell(String productName, int amount)
+      throws InvalidStateException, PermissionDeniedException, UserNotLoggedInException {
     productController.sell(productName, amount);
   }
 
-  public void sell(String productName, int amount, String customerCpf) throws InvalidStateException {
+  @RequireFullPermission
+  public void sell(String productName, int amount, String customerCpf)
+      throws InvalidStateException, PermissionDeniedException, UserNotLoggedInException {
     productController.sell(productName, amount);
     Product product = productController.queryProduct(productName);
     customerController.addPurchase(customerCpf, product);
   }
 
-  public void supply(String productName, int amount) throws InvalidStateException {
+  @RequireFullPermission
+  public void supply(String productName, int amount)
+      throws InvalidStateException, PermissionDeniedException, UserNotLoggedInException {
     productController.supply(productName, amount);
   }
 
-  public String queryProduct(String productName) {
+  public String queryProduct(String productName) throws UserNotLoggedInException {
     Product product = productController.queryProduct(productName);
     if (product == null) {
       return "Product not found";
     }
     return product.toString();
-  }
-
-  // TODO: Remove this once @RequireFullPermission is being correctly used in the controller
-  @RequireLogin
-  @RequireFullPermission
-  public void testPermission() throws PermissionDeniedException, UserNotLoggedInException {
-    System.out.println("Hello World");
   }
 }
