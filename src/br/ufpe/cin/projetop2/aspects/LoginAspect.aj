@@ -10,13 +10,20 @@ public aspect LoginAspect {
 
   String currentUser = null;
 
-  after(String username) returning(boolean loginStatus) : execution(boolean LoginHandler.login(String, ..)) && args(username, ..) {
+  after(String username) returning(boolean loginStatus)
+      : execution(boolean LoginHandler.login(String, ..)) && args(username, ..) {
     if (loginStatus) {
       currentUser = username;
     }
   }
 
-  pointcut requireLogin() : call(* ApplicationController.*(..));
+  after() returning : execution(void LoginHandler.logout()) {
+    currentUser = null;
+  }
+
+  pointcut requireLogin() :
+      call(* ApplicationController.*(..))
+      && !(call(void ApplicationController.login()) || call(* ApplicationController.getInstance()));
 
   declare soft: UserNotLoggedInException: requireLogin();
 
@@ -25,8 +32,8 @@ public aspect LoginAspect {
       return proceed();
     } catch (UserNotLoggedInException e) {
       System.err.println(e.getMessage());
-      LoginHandler loginHandler = new LoginHandler();
-      while(!loginHandler.login()) {
+      LoginHandler loginHandler = LoginHandler.getInstance();
+      while (!loginHandler.login()) {
         System.out.println("Login failed. Please try again");
       }
       return proceed();

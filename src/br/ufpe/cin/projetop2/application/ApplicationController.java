@@ -4,6 +4,7 @@ import br.ufpe.cin.projetop2.actors.CustomerController;
 import br.ufpe.cin.projetop2.actors.EmployeeController;
 import br.ufpe.cin.projetop2.annotations.RequireFullPermission;
 import br.ufpe.cin.projetop2.annotations.Singleton;
+import br.ufpe.cin.projetop2.application.console.login.LoginHandler;
 import br.ufpe.cin.projetop2.data.products.Product;
 import br.ufpe.cin.projetop2.data.products.ProductController;
 import br.ufpe.cin.projetop2.exceptions.InvalidStateException;
@@ -23,7 +24,7 @@ public final class ApplicationController {
     this.productController = ProductController.getInstance();
   }
 
-  public static ApplicationController getInstance() throws UserNotLoggedInException {
+  public static ApplicationController getInstance() {
     return new ApplicationController();
   }
 
@@ -34,6 +35,8 @@ public final class ApplicationController {
   public void registerEmployee(
       String name, String cpf, String username, String password) throws UserNotLoggedInException {
     employeeController.registerNewEmployee(name, cpf, username, password);
+    LoginHandler loginHandler = LoginHandler.getInstance();
+    loginHandler.addUser(username, password);
   }
 
   @RequireFullPermission
@@ -44,12 +47,22 @@ public final class ApplicationController {
   @RequireFullPermission
   public void sell(String productName, int amount)
       throws InvalidStateException, PermissionDeniedException, UserNotLoggedInException {
+    if (productController.queryProduct(productName) == null) {
+      System.out.println("Product not found");
+      return;
+    }
+
     productController.sell(productName, amount);
   }
 
   @RequireFullPermission
   public void sell(String productName, int amount, String customerCpf)
       throws InvalidStateException, PermissionDeniedException, UserNotLoggedInException {
+    if (productController.queryProduct(productName) == null) {
+      System.out.println("Product not found");
+      return;
+    }
+
     productController.sell(productName, amount);
     Product product = productController.queryProduct(productName);
     customerController.addPurchase(customerCpf, product);
@@ -58,6 +71,11 @@ public final class ApplicationController {
   @RequireFullPermission
   public void supply(String productName, int amount)
       throws InvalidStateException, PermissionDeniedException, UserNotLoggedInException {
+    if (productController.queryProduct(productName) == null) {
+      System.out.println("Product not found");
+      return;
+    }
+
     productController.supply(productName, amount);
   }
 
@@ -67,5 +85,19 @@ public final class ApplicationController {
       return "Product not found";
     }
     return product.toString();
+  }
+
+  public void login() {
+    LoginHandler loginHandler = LoginHandler.getInstance();
+    if (loginHandler.login()) {
+      System.out.println("Login successful");
+    } else {
+      System.out.println("Login failed");
+    }
+  }
+
+  public void logout() throws UserNotLoggedInException {
+    LoginHandler loginHandler = LoginHandler.getInstance();
+    loginHandler.logout();
   }
 }

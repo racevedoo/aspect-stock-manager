@@ -23,7 +23,9 @@ public class CommandHandler extends ConsoleHandler{
     this.registeredCommands.put("register product", true);
     this.registeredCommands.put("sell", true);
     this.registeredCommands.put("supply", true);
-    this.registeredCommands.put("query", true);
+    this.registeredCommands.put("query product", true);
+    this.registeredCommands.put("login", true);
+    this.registeredCommands.put("logout", true);
     this.registeredCommands.put("exit", true);
   }
 
@@ -35,12 +37,12 @@ public class CommandHandler extends ConsoleHandler{
       exists = this.registeredCommands.get(command);
       if (exists == null || !exists) {
         System.out.println("Command not supported.");
-      } 
+      }
     } while(exists == null);
-    
-    if (command.equals("query")) {
-        String ret = applicationController.queryProduct(this.getProductName());
-        System.out.println(ret);
+
+    if (command.equals("query product")) {
+      String ret = applicationController.queryProduct(this.getProductName());
+      System.out.println(ret);
     } else if (command.equals("register customer")) {
       applicationController.registerCustomer(this.getName(), this.getCpf());
     } else if (command.equals("register employee")) {
@@ -56,12 +58,16 @@ public class CommandHandler extends ConsoleHandler{
       }
     } else if(command.equals("supply")) {
       applicationController.supply(this.getProductName(), this.getAmount());
+    } else if (command.equals("login")) {
+      applicationController.login();
+    } else if (command.equals("logout")) {
+      applicationController.logout();
     } else if (command.equals("exit")) {
       super.close();
       System.exit(0);
     }
   }
-  
+
   private int getAmount() {
     return super.getConsoleInt("Enter amount:");
   }
@@ -69,19 +75,19 @@ public class CommandHandler extends ConsoleHandler{
   private String getProductName() {
     return super.getConsoleString("Enter the product name:");
   }
-  
+
   private String getName() {
     return super.getConsoleString("Enter name:");
   }
-  
+
   private String getCpf() {
     return super.getConsoleString("Enter cpf:");
   }
-  
+
   private String getUsername() {
     return super.getConsoleString("Enter employee username:");
   }
-  
+
   private String getPassword() {
     return super.getConsoleString("Enter employee password:");
   }

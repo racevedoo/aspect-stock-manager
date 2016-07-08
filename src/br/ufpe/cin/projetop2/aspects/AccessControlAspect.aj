@@ -8,6 +8,7 @@ import br.ufpe.cin.projetop2.actors.EmployeeController;
 import br.ufpe.cin.projetop2.annotations.RequireFullPermission;
 import br.ufpe.cin.projetop2.annotations.WrapLogin;
 import br.ufpe.cin.projetop2.application.ApplicationController;
+import br.ufpe.cin.projetop2.application.console.login.LoginHandler;
 import br.ufpe.cin.projetop2.exceptions.PermissionDeniedException;
 
 privileged public aspect AccessControlAspect {
@@ -27,13 +28,13 @@ privileged public aspect AccessControlAspect {
     this.accessLevel = level;
   }
   
-  public void EmployeeController.updatePermission(String cpf, AccessLevel level) {
-    Employee employee = this.entries.getData(cpf);
+  public void EmployeeController.updatePermission(String username, AccessLevel level) {
+    Employee employee = this.entries.getData(username);
     if (employee == null) {
       return;
     }
     employee.setAccessLevel(level);
-    this.entries.saveData(cpf, employee);
+    this.entries.saveData(username, employee);
   }
   
   declare soft: PermissionDeniedException: call(* ApplicationController.*(..));
@@ -68,17 +69,18 @@ privileged public aspect AccessControlAspect {
   }
   
   static {
-    updateFullPermissions();
+    employeeController.registerNewEmployee("Admin", "CPF", "admin", "admin");
   }
   
-  private static void updateFullPermissions() {
-    // TODO: Remove this register
-    employeeController.registerNewEmployee("Admin", "CPF", "admin", "admin");
+  private List<String> fullAccessList = Arrays.asList("admin", "lapl");
 
-    List<String> fullAccessList = Arrays.asList("admin");
+  after(String username) returning(boolean loginStatus)
+      : execution(boolean LoginHandler.login(String, ..)) && args(username, ..) {
     
-    for (String employeeCpf : fullAccessList) {
-      employeeController.updatePermission(employeeCpf, AccessLevel.FULL);
+    if (loginStatus) {
+      if (fullAccessList.contains(username)) {
+        employeeController.updatePermission(username, AccessLevel.FULL);
+      }
     }
-  }    
+  }
 }
