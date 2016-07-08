@@ -28,19 +28,22 @@ public final class ApplicationController {
     return new ApplicationController();
   }
 
-  public void registerCustomer(String name, String cpf) throws UserNotLoggedInException {
+  public void registerCustomer(String name, String cpf)
+      throws UserNotLoggedInException, InvalidStateException {
     customerController.registerNewCustomer(name, cpf);
   }
 
   public void registerEmployee(
-      String name, String cpf, String username, String password) throws UserNotLoggedInException {
+      String name, String cpf, String username, String password)
+          throws UserNotLoggedInException, InvalidStateException {
     employeeController.registerNewEmployee(name, cpf, username, password);
     LoginHandler loginHandler = LoginHandler.getInstance();
     loginHandler.addUser(username, password);
   }
 
   @RequireFullPermission
-  public void registerProduct(String name) throws PermissionDeniedException, UserNotLoggedInException {
+  public void registerProduct(String name)
+      throws PermissionDeniedException, UserNotLoggedInException, InvalidStateException {
     productController.registerNewProduct(name);
   }
 

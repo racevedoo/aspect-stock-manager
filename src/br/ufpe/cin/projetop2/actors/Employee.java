@@ -5,7 +5,7 @@ import br.ufpe.cin.projetop2.exceptions.InvalidStateException;
 public class Employee extends Person {
   private String login;
   private String password;
-  public Employee(String name, String cpf, String login, String password) {
+  public Employee(String name, String cpf, String login, String password) throws InvalidStateException {
     super(name, cpf);
     this.login = login;
     this.password = password;

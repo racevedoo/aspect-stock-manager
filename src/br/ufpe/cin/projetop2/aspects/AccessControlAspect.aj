@@ -9,6 +9,7 @@ import br.ufpe.cin.projetop2.annotations.RequireFullPermission;
 import br.ufpe.cin.projetop2.annotations.WrapLogin;
 import br.ufpe.cin.projetop2.application.ApplicationController;
 import br.ufpe.cin.projetop2.application.console.login.LoginHandler;
+import br.ufpe.cin.projetop2.exceptions.InvalidStateException;
 import br.ufpe.cin.projetop2.exceptions.PermissionDeniedException;
 
 privileged public aspect AccessControlAspect {
@@ -69,7 +70,11 @@ privileged public aspect AccessControlAspect {
   }
   
   static {
-    employeeController.registerNewEmployee("Admin", "CPF", "admin", "admin");
+    try {
+      employeeController.registerNewEmployee("Admin", "11144477735", "admin", "admin");
+    } catch (InvalidStateException e) {
+      System.err.println("Register employee creation in AccessControlAspect failed");
+    }
   }
   
   private List<String> fullAccessList = Arrays.asList("admin", "lapl");

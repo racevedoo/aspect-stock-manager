@@ -6,7 +6,7 @@ public class Person {
   private String name;
   private String cpf;
 
-  public Person(String name, String cpf) {
+  public Person(String name, String cpf) throws InvalidStateException {
     this.name = name;
     this.cpf = cpf;
   }

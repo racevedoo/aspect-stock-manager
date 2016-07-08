@@ -19,7 +19,7 @@ public final class ProductController {
     return new ProductController();
   }
 
-  public void registerNewProduct(String name) {
+  public void registerNewProduct(String name) throws InvalidStateException {
     Product product = new Product(name);
     productModel.saveData(name, product);
   }

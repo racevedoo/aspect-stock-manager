@@ -6,12 +6,12 @@ public final class Product {
   String name;
   int quantity;
 
-  public Product(String name) {
+  public Product(String name) throws InvalidStateException {
     this.name = name;
     this.quantity = 0;
   }
 
-  private Product(String name, int quantity) {
+  private Product(String name, int quantity) throws InvalidStateException {
     this.name = name;
     this.quantity = quantity;
   }

@@ -7,6 +7,7 @@ import br.ufpe.cin.projetop2.annotations.Singleton;
 import br.ufpe.cin.projetop2.data.DataModel;
 import br.ufpe.cin.projetop2.data.HashMapDataModel;
 import br.ufpe.cin.projetop2.data.products.Product;
+import br.ufpe.cin.projetop2.exceptions.InvalidStateException;
 
 @Singleton
 public final class CustomerController {
@@ -22,7 +23,7 @@ public final class CustomerController {
     return new CustomerController();
   }
 
-  public void registerNewCustomer(String name, String cpf) {
+  public void registerNewCustomer(String name, String cpf) throws InvalidStateException {
     Customer customer = new Customer(name, cpf);
     entries.saveData(cpf, customer);
   }
