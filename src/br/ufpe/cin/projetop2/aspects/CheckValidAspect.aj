@@ -38,7 +38,7 @@ public aspect CheckValidAspect {
   
   public void Person.checkValid() throws InvalidStateException {
     if (!isValidCpf(this.getCpf())) {
-      throw new InvalidStateException("CPF number is not valid.");
+      throw new InvalidStateException("CPF number is not valid. Rolling back");
     }
   }  
 
@@ -46,7 +46,7 @@ public aspect CheckValidAspect {
   
   public void Product.checkValid() throws InvalidStateException {
     if (this.getQuantity() < 0) {
-      throw new InvalidStateException("Product quantity is below zero.");
+      throw new InvalidStateException("Product quantity would be below zero. Rolling back");
     }
   }
 
