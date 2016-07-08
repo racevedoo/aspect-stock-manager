@@ -19,6 +19,7 @@ public class ConsoleHandler {
   public int getConsoleInt(String msg) {
     System.out.println(msg);
     int ret = in.nextInt();
+    in.nextLine();
     return ret;
   }
 
